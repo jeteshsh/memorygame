@@ -1,0 +1,94 @@
+
+<html>
+<body>
+
+<h2>Generate The Number</h2>
+
+
+
+<div id="generate"><br>
+  		
+		<div id="r_no"></div>
+		
+		<button onclick="getRndInteger(100000,1000000)" >Generate<br></button>
+		
+		<div id="refresh"></div>
+</div>
+  
+<p><br></p>
+  	
+<div id="guess">
+		<input type='text' id="saveServer">  
+                
+		<p><br></p>
+                
+		<button onclick="saveAndDisplay()" type="button">Guess</button>
+		
+		<button onclick="replay()" type="button">Replay</button>
+                
+		<div id="show"><br></div> 
+	        
+		<div id="displayResults"><br>
+</div>
+	
+  
+
+
+
+<script>
+ 	document.getElementById("guess").style.display = "none";
+ 	function getRndInteger(min, max) {
+  
+  		 disappear("guess");
+  
+   		localStorage.setItem("Random_no",Math.floor(Math.random() * (max - min)) + min);
+   		document.getElementById('r_no').innerHTML =localStorage.getItem("Random_no");
+   		document.getElementById('refresh').innerHTML ="Refreshing the page in 5 seconds";
+ 
+  
+   		setTimeout(function(){disappear("generate");
+   		disappear("refresh");
+   		appear("guess");  },1000);
+  
+	}
+
+	function disappear(id_){
+  		document.getElementById(id_).style.display = "none";
+	}
+
+	function appear(id_){
+		document.getElementById(id_).style.display = "block";
+	}
+	function saveAndDisplay(){
+		var input = document.getElementById("saveServer").value;
+		if(input.length==0)
+			{alert("Enter a number!");}
+		else 
+			{localStorage.setItem("server", input);
+
+			var num1=localStorage.getItem("Random_no");
+			var num2=localStorage.getItem("server");
+			match(num1,num2);}
+	}
+	function match(num1,num2){
+		var count=0; 
+ 		while((num1>0)&&(num2>0)){
+ 		if(num1%10==num2%10)
+ 		{count+=1; console.log(count+" "+num1+" "+num2);}
+ 		num1=num1-num1%10;
+ 		num1/=10;
+ 		num2=num2-num2%10;
+ 		num2/=10;
+		}
+		document.getElementById('displayResults').innerHTML =count+" correct guesses made";
+
+	}
+	function replay(){
+		location.reload(false);
+	}
+  
+
+</script>
+
+</body>
+</html>
